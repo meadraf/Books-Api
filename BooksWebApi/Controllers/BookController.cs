@@ -7,39 +7,55 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BooksWebApi.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/")]
 [ApiController]
 public class BookController : ControllerBase
 {
     // GET: api/Book
-    [HttpGet]
-    public IEnumerable<string> Get()
+    [HttpGet("books")]
+    public async Task<ActionResult<IEnumerable<string>>> GetAllBooks()
     {
         return new string[] {"value1", "value2"};
     }
 
     // GET: api/Book/5
-    [HttpGet("{id}", Name = "Get")]
-    public string Get(int id)
+    [HttpGet("recommended")]
+    public async Task<ActionResult<string>> GetTopBooks(int id)
     {
         return "value";
     }
 
-    // POST: api/Book
-    [HttpPost]
-    public void Post([FromBody] string value)
+    [HttpGet("books/{id}")]
+    public async Task<ActionResult<string>> GetBookDetails(int id)
     {
+        return "value";
+    }
+    
+    [HttpDelete("books/{id}")]
+    public async Task<ActionResult<string>> Delete(int id)
+    {
+        return "value";
+    }
+    
+    // POST: api/Book
+    [HttpPost("books/save")]
+    public async Task<ActionResult<string>> SaveBook([FromBody] string value)
+    {
+        return "value";
+    }
+    
+    [HttpPut("books/{id}/review")]
+    public async Task<ActionResult<string>> SaveReview([FromBody] string value, int id)
+    {
+        return "value";
     }
 
     // PUT: api/Book/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    [HttpPut("books/{id}/rate")]
+    public async Task<ActionResult<string>> Put(int id, [FromBody] string value)
     {
+        return "value";
     }
 
-    // DELETE: api/Book/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
-    }
+    
 }

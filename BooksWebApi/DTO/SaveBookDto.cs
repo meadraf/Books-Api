@@ -1,13 +1,11 @@
-namespace BooksWebApi.Models;
+namespace BooksWebApi.DTO;
 
-public class Book
+public class SaveBookDto
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Cover { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
-    public string Author { get; set; } = string.Empty;
     public string Genre { get; set; } = string.Empty;
-    public List<Review>? Reviews { get; set; }= new();
-    public List<Rating>? Ratings { get; set; } = new();
+    public string Author { get; set; } = string.Empty;
 }
