@@ -1,11 +1,9 @@
-using AutoMapper;
+using System.Net.Mime;
 using BooksWebApi.DataBase;
-using BooksWebApi.DTO;
 using BooksWebApi.Services;
 using BooksWebApi.Services.Interfaces;
-using BooksWebApi.Validation;
-using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +15,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
@@ -32,6 +29,34 @@ builder.Services.AddControllers().AddFluentValidation(fv =>
 builder.Services.AddDbContext<BookDbContext>(options => options.UseInMemoryDatabase("Books"));
 
 var app = builder.Build();
+
+app.UseHttpLogging();
+
+app.UseExceptionHandler(exceptionHandlerApp =>
+{
+    exceptionHandlerApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+        // using static System.Net.Mime.MediaTypeNames;
+        context.Response.ContentType = MediaTypeNames.Text.Plain;
+
+        await context.Response.WriteAsync("An exception was thrown.");
+
+        var exceptionHandlerPathFeature =
+            context.Features.Get<IExceptionHandlerPathFeature>();
+
+        if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
+        {
+            await context.Response.WriteAsync(" The file was not found.");
+        }
+
+        if (exceptionHandlerPathFeature?.Path == "/")
+        {
+            await context.Response.WriteAsync(" Page: Home.");
+        }
+    });
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

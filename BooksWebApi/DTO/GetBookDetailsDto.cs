@@ -1,5 +1,3 @@
-using BooksWebApi.Models;
-
 namespace BooksWebApi.DTO;
 
 public class GetBookDetailsDto
