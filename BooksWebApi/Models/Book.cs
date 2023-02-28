@@ -8,4 +8,6 @@ public class Book
     public string Content { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
     public string Genre { get; set; } = string.Empty;
+    public List<Review>? Reviews { get; set; }
+    public List<Rating>? Ratings { get; set; }
 }
