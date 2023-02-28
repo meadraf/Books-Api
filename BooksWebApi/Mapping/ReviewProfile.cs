@@ -8,6 +8,6 @@ public class ReviewProfile : Profile
 {
     public ReviewProfile()
     {
-        CreateMap<SaveReviewDto, Review>();
+        CreateMap<Review, SaveReviewDto>().ReverseMap();
     }
 }

@@ -16,6 +16,8 @@ public class BookProfile : Profile
                 option => option.MapFrom(src => src.Ratings!.Any() ? src.Ratings!.Average(r => r.Score) : 0));
         
         CreateMap<Book, GetBookDetailsDto>()
+            .ForMember(dest => dest.Reviews, map =>
+                map.MapFrom(s => s.Reviews.Select(x => new Review {Id = x.Id, Message = x.Message, Reviewer = x.Reviewer})))
             .ForMember(dest => dest.Rating,
                 option => option.MapFrom(src => src.Ratings!.Any() ? src.Ratings!.Average(r => r.Score) : 0));
     }

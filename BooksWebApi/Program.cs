@@ -1,4 +1,12 @@
 using AutoMapper;
+using BooksWebApi.DataBase;
+using BooksWebApi.DTO;
+using BooksWebApi.Services;
+using BooksWebApi.Services.Interfaces;
+using BooksWebApi.Validation;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +17,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+
+builder.Services.AddControllers().AddFluentValidation(fv =>
+{
+    fv.DisableDataAnnotationsValidation = true;
+    fv.RegisterValidatorsFromAssemblyContaining<Program>();
+});
+
+builder.Services.AddDbContext<BookDbContext>(options => options.UseInMemoryDatabase("Books"));
 
 var app = builder.Build();
 

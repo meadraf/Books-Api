@@ -2,6 +2,7 @@ namespace BooksWebApi.DTO;
 
 public class SaveReviewDto
 {
-    public string Message { get; set; }
-    public string Reviewer { get; set; }
+    public int? Id { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public string Reviewer { get; set; } = string.Empty;
 }

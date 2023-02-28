@@ -11,9 +11,6 @@ public class SaveBookDtoValidator : AbstractValidator<SaveBookDto>
             .NotNull()
             .NotEmpty()
             .MaximumLength(50);
-        RuleFor(b => b.Cover)
-            .NotNull()
-            .NotEmpty();
         RuleFor(b => b.Content)
             .NotNull()
             .NotEmpty()

@@ -10,5 +10,5 @@ public class GetBookDetailsDto
     public string Cover { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public decimal Rating { get; set; }
-    public List<Review> Reviews = new();
+    public List<SaveReviewDto> Reviews { get; set; } = new();
 }
